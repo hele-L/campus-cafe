@@ -80,13 +80,14 @@ a {
     flex-direction: column;
 }
 
+/*
 @media (min-width:600px){
     .menu-flex  {
         flex-direction: row;
         justify-content: space-between;
     }
 }
-
+*/
 
 article {
     border: 1px solid var(--border);
@@ -166,6 +167,21 @@ Additional Requirements:
 - Receipt must not break */
 @media (min-width: 768px) {
     /* add properties here */
+    .container{
+        grid-template-columns: 1ft 1ft;
+
+    }
+    .header{
+        grid-column: 1/3;
+    }
+    .menu-flex{
+        flex-direction: row;
+    }
+
+    .receipt{
+        min-width: min-content;
+    }
+
 }
 
 /* TODO (CSS #4): Laptop Mode 
@@ -175,6 +191,24 @@ Additional Requirements:
 - Cannot be exactly the same as tablet mode. At least 1 grid item property must be different */
  @media (min-width: 992px) {
     /* add properties here */
+    .container{
+    grid-template-columns: 1ft 1ft 1ft;
+
+    }
+    .header{
+        grid-column: 1/4;
+    }
+    .menu-flex{
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap:8px;
+    }
+
+    .receipt{
+        min-width: min-content;
+        grid-column: span 1;
+        
+    }
 }
 
 /* TODO (CSS #5): Desktop Mode 
@@ -184,4 +218,21 @@ Additional Requirements:
 
 @media (min-width: 1200px) {
     /* add properties here */
+    .container{
+    grid-template-columns: 1ft 1ft 1ft;
+
+    }
+    .header{
+        grid-column: 1/4;
+    }
+    .menu-flex{
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .receipt{
+        grid-column: span 1;
+        
+    }    
 }
