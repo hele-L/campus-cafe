@@ -19,6 +19,10 @@ function money(n) { return `$${n.toFixed(2)}`;
 
 function normalizeType(raw) { 
     /* Add JS code here */ 
+    if (raw == null){
+        return "";}
+    return String(raw).toLowerCase().trim();
+
 } 
 
 
@@ -27,6 +31,10 @@ function normalizeType(raw) {
 
 function isValidType(t) { 
     /* Add JS code here */ 
+    if (t == "coffee" || t == "sandwich" || t == "salad"){
+        return true;
+    }
+    return false;
 } 
 
 /* TODO (JS #3): 
@@ -35,28 +43,39 @@ function isValidType(t) {
 - should add a line break and an indentation after every 3 icons */ 
 
 function iconsFor(type, qty) { 
-    const map = { coffee: " ", sandwich: " ", salad: " " }; 
+    const map = { coffee: "☕", sandwich: "🥪", salad: "🥗" }; 
     const icon = map[type] || " "; 
     const cap = Math.min(qty, 10); 
     let icons = "";
 
-// for (...) { 
-// // ... 
-// // icons += icon; 
-// // } return icons; } 
-// 
+    for (let i=0; i<cap ; i++) { 
+        icons += icon; 
+    } return icons; } 
 
-/* TODO (JS #4): - Implement full math rules - unitPrice line is provided */ 
+
+/* TODO (JS #4): 
+- Implement full math rules 
+- unitPrice line is provided 
+*/ 
 
 function processQuote(type, qty, isStudent, reusableCup) { 
     const unitPrice = PRICES[type]; 
-    // subtotal = unit price × quantity 
-    // studentDiscount = 10% (STUDENT_RATE) of subtotal if isStudent 
-    // ecoFee = ECO_FEE only if type is coffee AND reusableCup is false 
-    // bulkDiscount = BULK_OFF only if qty >= BULK_QTY 
-    // taxableAmount = subtotal - studentDiscount + ecoFee - bulkDiscount 
-    // tax = 5% (TAX_RATE) of taxableAmount 
-    // total = taxableAmount + tax return { unitPrice, subtotal, studentDiscount, ecoFee, bulkDiscount, tax, total }; }; 
+    const subtotal = unitPrice * qty;
+
+    let studentDiscount = 0;
+    let ecoFee = 0;
+    let bulkDiscount = 0;
+
+    if (isStudent){ studentDiscount = 0.1*subtotal;}
+    if (type==="coffee" && reusableCup === false) {
+        ecoFee = ECO_FEE;} 
+    if (qty >= BULK_QTY ){
+        bulkDiscount = BULK_OFF;}
+    const taxableAmount = subtotal - studentDiscount + ecoFee - bulkDiscount 
+    const tax = 0.05*taxableAmount 
+    const total = taxableAmount + tax 
+    return { unitPrice, subtotal, studentDiscount, ecoFee, bulkDiscount, tax, total }; 
+}; 
 
 
     
@@ -84,13 +103,16 @@ function processQuote(type, qty, isStudent, reusableCup) {
 /* TODO (JS #5): - Show a clear error in #receipt */ 
 function showError(msg) { 
     /* Add JS code here */ 
+    document.getElementById("receipt").textContent = 'Error: ${msg}';
 } 
 
 
 /* TODO (JS #6): - Reset #receipt to "No order data." */ 
 function resetUI() { 
     /* Add JS code here */ 
+    document.getElementById("receipt").textContent = 'No oder data.'
 }
+
 
 async function loadWeather() { 
     const box = document.getElementById("weatherBox"); 
@@ -132,7 +154,8 @@ function main() {
         
         /* TODO (JS #8): 
         - Add a confirm() dialog here to ask for student discounts 
-        - Store the result in a variable named isStudent */ 
+        - Store the result in a variable named isStudent */
+        const isStudent = confirm("Are you a student? ");
         
         const reusableCup = (type === "coffee") ? 
             confirm("Brought reusable cup(s)? (+$1.00 otherwise)") : true; 
