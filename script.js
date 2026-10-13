@@ -150,7 +150,10 @@ function main() {
         - must be an integer 
         - must be between 1 and 10 
         - if invalid: showError(...) and stop */ 
-        
+        if(!Number.isInteger(qty) || qty<1 || qty>10 ){
+            showError("Quantity must be an integer between 1 to 10.");
+            return;
+        }
         
         /* TODO (JS #8): 
         - Add a confirm() dialog here to ask for student discounts 
